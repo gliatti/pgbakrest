@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 ####################################################################################################################################
-# doc.pl - PgBackRest Doc Builder
+# doc.pl - PgBakRest Doc Builder
 ####################################################################################################################################
 
 ####################################################################################################################################
@@ -24,18 +24,18 @@ use lib dirname(dirname(abs_path($0))) . '/lib';
 use lib dirname(dirname(abs_path($0))) . '/build/lib';
 use lib dirname(dirname(abs_path($0))) . '/test/lib';
 
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::Storage;
-use pgBackRestTest::Common::StoragePosix;
+use pgBakRestTest::Common::ExecuteTest;
+use pgBakRestTest::Common::Storage;
+use pgBakRestTest::Common::StoragePosix;
 
-use pgBackRestDoc::Common::Doc;
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::Html::DocHtmlSite;
-use pgBackRestDoc::Markdown::DocMarkdown;
-use pgBackRestDoc::ProjectInfo;
+use pgBakRestDoc::Common::Doc;
+use pgBakRestDoc::Common::DocManifest;
+use pgBakRestDoc::Common::Exception;
+use pgBakRestDoc::Common::Log;
+use pgBakRestDoc::Common::String;
+use pgBakRestDoc::Html::DocHtmlSite;
+use pgBakRestDoc::Markdown::DocMarkdown;
+use pgBakRestDoc::ProjectInfo;
 
 ####################################################################################################################################
 # Usage
@@ -43,7 +43,7 @@ use pgBackRestDoc::ProjectInfo;
 
 =head1 NAME
 
-doc.pl - Generate pgBackRest documentation
+doc.pl - Generate pgBakRest documentation
 
 =head1 SYNOPSIS
 
@@ -51,7 +51,7 @@ doc.pl [options]
 
  General Options:
    --help           Display usage and exit
-   --version        Display pgBackRest version
+   --version        Display pgBakRest version
    --quiet          Sets log level to ERROR
    --log-level      Log level for execution (e.g. ERROR, WARN, INFO, DEBUG)
    --deploy         Write exe.cache into resource for persistence
@@ -189,8 +189,8 @@ eval
     # Get the base path
     my $strBasePath = abs_path(dirname($0));
 
-    my $oStorageDoc = new pgBackRestTest::Common::Storage(
-        $strBasePath, new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageDoc = new pgBakRestTest::Common::Storage(
+        $strBasePath, new pgBakRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
 
     if (!defined($strDocPath))
     {
@@ -237,14 +237,14 @@ eval
 
     $strBuildVar .= " --var=debug=" . ($bDebug ? 'y' : 'n');
 
-    executeTest("ninja -C ${strBuildPath} doc/src/doc-pgbackrest");
+    executeTest("ninja -C ${strBuildPath} doc/src/doc-pgbakrest");
     executeTest(
-        "${strBuildPath}/doc/src/doc-pgbackrest --repo-path=${strRepoPath}${strBuildVar}" .
+        "${strBuildPath}/doc/src/doc-pgbakrest --repo-path=${strRepoPath}${strBuildVar}" .
             ($strLogLevel ne 'info' ? " --log-level=${strLogLevel}" : ''),
         {bShowOutputAsync => true});
 
     # Load the manifest
-    my $oManifest = new pgBackRestDoc::Common::DocManifest(
+    my $oManifest = new pgBakRestDoc::Common::DocManifest(
         $oStorageDoc, \@stryRequire, \@stryInclude, \@stryExclude, $rhKeyVariableOverride, $rhVariableOverride,
         $strDocPath, $bDeploy, $bCacheOnly, $bPre);
 
@@ -324,7 +324,7 @@ eval
         if ($strOutput eq 'markdown')
         {
             my $oMarkdown =
-                new pgBackRestDoc::Markdown::DocMarkdown
+                new pgBakRestDoc::Markdown::DocMarkdown
                 (
                     $oManifest,
                     "${strBasePath}/xml",
@@ -337,7 +337,7 @@ eval
         elsif ($strOutput eq 'html')
         {
             my $oHtmlSite =
-                new pgBackRestDoc::Html::DocHtmlSite
+                new pgBakRestDoc::Html::DocHtmlSite
                 (
                     $oManifest,
                     "${strBasePath}/xml",

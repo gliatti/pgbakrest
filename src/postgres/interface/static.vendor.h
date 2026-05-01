@@ -6,7 +6,7 @@ Portions Copyright (c) 1994, Regents of the University of California
 
 For each supported release of PostgreSQL check the types in this file to see if they have changed. The easiest way to do this is to
 copy and paste in place and check git to see if there are any diffs. Tabs should be copied as is to make this process easy even
-though the pgBackRest project does not use tabs elsewhere.
+though the pgBakRest project does not use tabs elsewhere.
 
 Comments should be copied with the types they apply to, even if the comment has not changed. This does get repetitive, but has no
 runtime cost and makes the rules a bit easier to follow.
@@ -15,7 +15,7 @@ If a comment is changed then the newer comment should be copied. If the *type* h
 which could have a large impact on dependencies. Hopefully that won't happen often.
 
 Note when adding new types it is safer to add them to version.auto.c unless they are needed for code that must be compatible across
-all versions of PostgreSQL supported by pgBackRest.
+all versions of PostgreSQL supported by pgBakRest.
 ***********************************************************************************************************************************/
 #ifndef POSTGRES_INTERFACE_STATICVENDOR_H
 #define POSTGRES_INTERFACE_STATICVENDOR_H

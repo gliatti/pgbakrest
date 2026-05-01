@@ -1,34 +1,34 @@
-# pgBackRest <br/> Reliable PostgreSQL Backup & Restore
+# pgBakRest <br/> Reliable PostgreSQL Backup & Restore
 
 ## NOTICE OF OBSOLESCENCE
 
-TL;DR: pgBackRest is no longer being maintained. If you fork pgBackRest, please select a new name for your project.
+TL;DR: pgBakRest is no longer being maintained. If you fork pgBakRest, please select a new name for your project.
 
-After a lot of thought, I have decided to stop working on pgBackRest. I did not come to this decision lightly. pgBackRest has been my passion project for the last thirteen years, and I was fortunate to have corporate sponsorship for much of this time, but there were also many late nights and weekends as I worked to make pgBackRest the project it is today, aided by numerous contributors. Every open-source developer knows exactly what I mean and how much of your life gets devoted to a special project.
+After a lot of thought, I have decided to stop working on pgBakRest. I did not come to this decision lightly. pgBakRest has been my passion project for the last thirteen years, and I was fortunate to have corporate sponsorship for much of this time, but there were also many late nights and weekends as I worked to make pgBakRest the project it is today, aided by numerous contributors. Every open-source developer knows exactly what I mean and how much of your life gets devoted to a special project.
 
-Since Crunchy Data was sold, I have been maintaining pgBackRest and looking for a position that would allow me to continue the work, but so far I have not been successful. Likewise, my efforts to secure sponsorship have also fallen far short of what I need to make the project viable.
+Since Crunchy Data was sold, I have been maintaining pgBakRest and looking for a position that would allow me to continue the work, but so far I have not been successful. Likewise, my efforts to secure sponsorship have also fallen far short of what I need to make the project viable.
 
-Like everyone else, I need to make a living, and the range of pgBackRest-related roles is very limited. I can now consider a wider variety of opportunities, but those will not leave me time to work on pgBackRest, which requires a fair amount of time for maintenance, bug fixes, PR reviews, answering issues, etc. That does not even include time to write new features, which is what I really love to do. Rather than do the work poorly and/or sporadically, I think it makes more sense to have a hard stop.
+Like everyone else, I need to make a living, and the range of pgBakRest-related roles is very limited. I can now consider a wider variety of opportunities, but those will not leave me time to work on pgBakRest, which requires a fair amount of time for maintenance, bug fixes, PR reviews, answering issues, etc. That does not even include time to write new features, which is what I really love to do. Rather than do the work poorly and/or sporadically, I think it makes more sense to have a hard stop.
 
-I imagine at some point pgBackRest will be forked, but that will be a new project with new maintainers, and they will need to build trust the same way we did.
+I imagine at some point pgBakRest will be forked, but that will be a new project with new maintainers, and they will need to build trust the same way we did.
 
-Again, many thanks to all the pgBackRest contributors over the years. It was a pleasure working with you!
+Again, many thanks to all the pgBakRest contributors over the years. It was a pleasure working with you!
 
 ## Introduction
 
-pgBackRest is a reliable backup and restore solution for PostgreSQL that seamlessly scales up to the largest databases and workloads.
+pgBakRest is a reliable backup and restore solution for PostgreSQL that seamlessly scales up to the largest databases and workloads.
 
-pgBackRest [v2.58.0](https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0) is the current stable release. Release notes are on the [Releases](http://www.pgbackrest.org/release.html) page.
+pgBakRest [v2.58.0](https://github.com/pgbakrest/pgbakrest/releases/tag/release/2.58.0) is the current stable release. Release notes are on the [Releases](http://www.pgbakrest.org/release.html) page.
 
 ## Features
 
 ### Parallel Backup & Restore
 
-Compression is usually the bottleneck during backup operations so pgBackRest solves this problem with parallel processing and more efficient compression algorithms such as lz4 and zstd.
+Compression is usually the bottleneck during backup operations so pgBakRest solves this problem with parallel processing and more efficient compression algorithms such as lz4 and zstd.
 
 ### Local or Remote Operation
 
-A custom protocol allows pgBackRest to backup, restore, and archive locally or remotely via TLS/SSH with minimal configuration. An interface to query PostgreSQL is also provided via the protocol layer so that remote access to PostgreSQL is never required, which enhances security.
+A custom protocol allows pgBakRest to backup, restore, and archive locally or remotely via TLS/SSH with minimal configuration. An interface to query PostgreSQL is also provided via the protocol layer so that remote access to PostgreSQL is never required, which enhances security.
 
 ### Multiple Repositories
 
@@ -36,7 +36,7 @@ Multiple repositories allow, for example, a local repository with minimal retent
 
 ### Full, Differential, & Incremental Backups (at File or Block Level)
 
-Full, differential, and incremental backups are supported. pgBackRest is not susceptible to the time resolution issues of rsync, making differential and incremental backups safe without the requirement to checksum each file. Block-level backups save space by only copying the parts of files that have changed.
+Full, differential, and incremental backups are supported. pgBakRest is not susceptible to the time resolution issues of rsync, making differential and incremental backups safe without the requirement to checksum each file. Block-level backups save space by only copying the parts of files that have changed.
 
 ### Backup Rotation & Archive Expiration
 
@@ -52,7 +52,7 @@ All operations utilize file and directory level fsync to ensure durability.
 
 ### Page Checksums
 
-If page checksums are enabled pgBackRest will validate the checksums for every file that is copied during a backup. All page checksums are validated during a full backup and checksums in files that have changed are validated during differential and incremental backups.
+If page checksums are enabled pgBakRest will validate the checksums for every file that is copied during a backup. All page checksums are validated during a full backup and checksums in files that have changed are validated during differential and incremental backups.
 
 Validation failures do not stop the backup process, but warnings with details of exactly which pages have failed validation are output to the console and file log.
 
@@ -90,29 +90,29 @@ File and directory links are supported for any file or directory in the PostgreS
 
 ### S3, Azure, and GCS Compatible Object Store Support
 
-pgBackRest repositories can be located in S3, Azure, and GCS compatible object stores to allow for virtually unlimited capacity and retention.
+pgBakRest repositories can be located in S3, Azure, and GCS compatible object stores to allow for virtually unlimited capacity and retention.
 
 ### Encryption
 
-pgBackRest can encrypt the repository to secure backups wherever they are stored.
+pgBakRest can encrypt the repository to secure backups wherever they are stored.
 
 ### Compatibility with ten versions of PostgreSQL
 
-pgBackRest includes support for ten versions of PostgreSQL, the five supported versions and the last five EOL versions. This allows ample time to upgrade to a supported version.
+pgBakRest includes support for ten versions of PostgreSQL, the five supported versions and the last five EOL versions. This allows ample time to upgrade to a supported version.
 
 ## Getting Started
 
-pgBackRest strives to be easy to configure and operate:
+pgBakRest strives to be easy to configure and operate:
 
-- [User guides](http://www.pgbackrest.org/user-guide-index.html) for various operating systems and PostgreSQL versions.
+- [User guides](http://www.pgbakrest.org/user-guide-index.html) for various operating systems and PostgreSQL versions.
 
-- [Command reference](http://www.pgbackrest.org/command.html) for command-line operations.
+- [Command reference](http://www.pgbakrest.org/command.html) for command-line operations.
 
-- [Configuration reference](http://www.pgbackrest.org/configuration.html) for creating pgBackRest configurations.
+- [Configuration reference](http://www.pgbakrest.org/configuration.html) for creating pgBakRest configurations.
 
 ## Sponsorship
 
-pgBackRest would not exist without sponsors. Writing new features, fixing bugs, reviewing contributions, answering questions from the community, and maintenance all take a considerable amount of time.
+pgBakRest would not exist without sponsors. Writing new features, fixing bugs, reviewing contributions, answering questions from the community, and maintenance all take a considerable amount of time.
 
 Current sponsors: [Supabase](https://supabase.com).
 

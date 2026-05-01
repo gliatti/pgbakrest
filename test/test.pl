@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 ####################################################################################################################################
-# test.pl - pgBackRest Unit Tests
+# test.pl - pgBakRest Unit Tests
 ####################################################################################################################################
 
 ####################################################################################################################################
@@ -29,22 +29,22 @@ use lib dirname(dirname($0)) . '/lib';
 use lib dirname(dirname($0)) . '/build/lib';
 use lib dirname(dirname($0)) . '/doc/lib';
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::ProjectInfo;
+use pgBakRestDoc::Common::Exception;
+use pgBakRestDoc::Common::Log;
+use pgBakRestDoc::Common::String;
+use pgBakRestDoc::ProjectInfo;
 
-use pgBackRestTest::Common::BuildTest;
-use pgBackRestTest::Common::CodeCountTest;
-use pgBackRestTest::Common::ContainerTest;
-use pgBackRestTest::Common::DefineTest;
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::JobTest;
-use pgBackRestTest::Common::ListTest;
-use pgBackRestTest::Common::Storage;
-use pgBackRestTest::Common::StoragePosix;
-use pgBackRestTest::Common::VmTest;
-use pgBackRestTest::Common::Wait;
+use pgBakRestTest::Common::BuildTest;
+use pgBakRestTest::Common::CodeCountTest;
+use pgBakRestTest::Common::ContainerTest;
+use pgBakRestTest::Common::DefineTest;
+use pgBakRestTest::Common::ExecuteTest;
+use pgBakRestTest::Common::JobTest;
+use pgBakRestTest::Common::ListTest;
+use pgBakRestTest::Common::Storage;
+use pgBakRestTest::Common::StoragePosix;
+use pgBakRestTest::Common::VmTest;
+use pgBakRestTest::Common::Wait;
 
 ####################################################################################################################################
 # Usage
@@ -52,7 +52,7 @@ use pgBackRestTest::Common::Wait;
 
 =head1 NAME
 
-test.pl - pgBackRest Unit Tests
+test.pl - pgBakRest Unit Tests
 
 =head1 SYNOPSIS
 
@@ -302,8 +302,8 @@ eval
         $strTestPath = cwd() . '/test';
     }
 
-    my $oStorageTest = new pgBackRestTest::Common::Storage(
-        $strTestPath, new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageTest = new pgBakRestTest::Common::Storage(
+        $strTestPath, new pgBakRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
 
     if ($bCoverageOnly)
     {
@@ -321,8 +321,8 @@ eval
     my $strBackRestBase = dirname(dirname(abs_path($0)));
     my $strVagrantPath = "${strBackRestBase}/test/.vagrant";
 
-    my $oStorageBackRest = new pgBackRestTest::Common::Storage(
-        $strBackRestBase, new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageBackRest = new pgBakRestTest::Common::Storage(
+        $strBackRestBase, new pgBakRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
 
     # Check that the test path is not in the git repo path
     if (index("${strTestPath}/", "${strBackRestBase}/") != -1)
@@ -332,7 +332,7 @@ eval
             "test path '${strTestPath}' may not be in the repo path '${strBackRestBase}'\n" .
             "HINT: was test.pl run in '${strBackRestBase}'?\n" .
             "HINT: use --test-path to set a test path\n" .
-            "HINT: run test.pl from outside the repo, e.g. 'pgbackrest/test/test.pl'");
+            "HINT: run test.pl from outside the repo, e.g. 'pgbakrest/test/test.pl'");
     }
 
     ################################################################################################################################
@@ -498,7 +498,7 @@ eval
         ($bDryRun ? '' : " && \\\n${strBuildPath}/src/build-code error ${strBackRestBase}/src") .
         ($bDryRun ? '' : " && \\\n${strBuildPath}/src/build-code postgres-version ${strBackRestBase}/src") .
         " && \\\n${strBuildPath}/src/build-code postgres ${strBackRestBase}/src ${strRepoCachePath}" .
-        " && \\\nninja -C ${strBuildPath} test/src/test-pgbackrest 2>&1";
+        " && \\\nninja -C ${strBuildPath} test/src/test-pgbakrest 2>&1";
 
     if (!-e $strBuildNinja)
     {
@@ -654,8 +654,8 @@ eval
 
                     # Setup build if it does not exist
                     my $strBuildCommand =
-                        "ninja -C ${strBuildPath}" . ($bBinRequired ? ' src/pgbackrest' : '') .
-                        ($bUnitRequired ? ' test/src/test-pgbackrest' : '') .  ' 2>&1';
+                        "ninja -C ${strBuildPath}" . ($bBinRequired ? ' src/pgbakrest' : '') .
+                        ($bUnitRequired ? ' test/src/test-pgbakrest' : '') .  ' 2>&1';
 
                     if (!-e $strBuildNinja)
                     {
@@ -777,7 +777,7 @@ eval
         {
             if (!defined($$oyProcess[$iVmIdx]) && $iTestIdx < @{$oyTestRun})
             {
-                my $oJob = new pgBackRestTest::Common::JobTest(
+                my $oJob = new pgBakRestTest::Common::JobTest(
                     $oStorageTest, $strBackRestBase, $strTestPath, $$oyTestRun[$iTestIdx], $bDryRun, $bVmOut, $strPlatform,
                     $strVmArch, $strImage, $iVmIdx, $iVmMax, $iTestIdx, $iTestMax, $strLogLevel, $strLogLevelTest,
                     $strLogLevelTestFile, !$bNoLogTimestamp, $bShowOutputAsync, $bNoCleanup, $iRetry, !$bNoBackTrace, !$bNoValgrind,
@@ -809,8 +809,8 @@ eval
             $strModuleList .= ' ' . $hTest->{&TEST_MODULE} . '/' . $hTest->{&TEST_NAME};
         }
 
-        my $oExec = new pgBackRestTest::Common::ExecuteTest(
-            "${strBuildPath}/test/src/test-pgbackrest --log-level=warn --vm=${strVm} --repo-path=${strBackRestBase}" .
+        my $oExec = new pgBakRestTest::Common::ExecuteTest(
+            "${strBuildPath}/test/src/test-pgbakrest --log-level=warn --vm=${strVm} --repo-path=${strBackRestBase}" .
             " --test-path=${strTestPath}" . ($bCoverageSummary ? ' --coverage-summary' : '') . " test${strModuleList}",
             {bShowOutputAsync => true, bSuppressError => true});
         $oExec->begin();

@@ -42,7 +42,7 @@ cmdStanzaDelete(void)
                 {
                     THROW_FMT(
                         FileMissingError, "stop file does not exist for stanza '%s'\n"
-                        "HINT: has the pgbackrest stop command been run on this server for this stanza?",
+                        "HINT: has the pgbakrest stop command been run on this server for this stanza?",
                         strZ(cfgOptionDisplay(cfgOptStanza)));
                 }
 
@@ -80,7 +80,7 @@ cmdStanzaDelete(void)
                 storagePathRemoveP(storageRepoWrite(), STORAGE_REPO_BACKUP_STR, .recurse = true);
 
             // Remove the stop file - this will not error if the stop file does not exist. If the stanza directories existed but
-            // nothing was in them, then no pgbackrest commands can be in progress without the info files so a stop is technically
+            // nothing was in them, then no pgbakrest commands can be in progress without the info files so a stop is technically
             // not necessary
             storageRemoveP(storageLocalWrite(), lockStopFileName(cfgOptionStr(cfgOptStanza)));
         }

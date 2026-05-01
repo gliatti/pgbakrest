@@ -110,7 +110,7 @@ option:
 
   repo-path:
     type: string
-    default: pgbackrest
+    default: pgbakrest
     command:
       test: {}
 

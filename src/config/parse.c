@@ -47,8 +47,8 @@ typedef enum
 /***********************************************************************************************************************************
 Standard config file name and old default path and name
 ***********************************************************************************************************************************/
-#define PGBACKREST_CONFIG_ORIG_PATH_FILE                            "/etc/" PROJECT_CONFIG_FILE
-STRING_STATIC(PGBACKREST_CONFIG_ORIG_PATH_FILE_STR,                 PGBACKREST_CONFIG_ORIG_PATH_FILE);
+#define PGBAKREST_CONFIG_ORIG_PATH_FILE                            "/etc/" PROJECT_CONFIG_FILE
+STRING_STATIC(PGBAKREST_CONFIG_ORIG_PATH_FILE_STR,                 PGBAKREST_CONFIG_ORIG_PATH_FILE);
 
 /***********************************************************************************************************************************
 Mem context and local variables
@@ -1446,7 +1446,7 @@ Rules:
 - config-include-path only is specified. *.conf files in the config-include-path will be loaded and the path is required to exist.
   The default config will be be loaded if it exists.
 - config-include-path and config-path are specified. The *.conf files in the config-include-path will be loaded and the directory
-  passed must exist. The overridden default of the config file path (<config-path>/pgbackrest.conf) will be loaded if exists but is
+  passed must exist. The overridden default of the config file path (<config-path>/pgbakrest.conf) will be loaded if exists but is
   not required.
 - If the config and config-include-path are specified. The config file will be loaded and is expected to exist and *.conf files in
   the config-include-path will be appended and at least one is expected to exist.
@@ -1499,7 +1499,7 @@ cfgFileLoad(
     // NOTE: Passing defaults to enable more complete test coverage
     const String *optConfigDefault,                                 // Current default for --config option
     const String *optConfigIncludePathDefault,                      // Current default for --config-include-path option
-    const String *const origConfigDefault)                          // Original --config option default (/etc/pgbackrest.conf)
+    const String *const origConfigDefault)                          // Original --config option default (/etc/pgbakrest.conf)
 {
     FUNCTION_LOG_BEGIN(logLevelTrace);
         FUNCTION_LOG_PARAM(STORAGE, storage);
@@ -1992,7 +1992,7 @@ cfgParse(const Storage *const storage, const unsigned int argListSize, const cha
                 const char *keyValue = environ[environIdx];
                 environIdx++;
 
-                if (strstr(keyValue, PGBACKREST_ENV) == keyValue)
+                if (strstr(keyValue, PGBAKREST_ENV) == keyValue)
                 {
                     // Find the first = char
                     const char *const equalPtr = strchr(keyValue, '=');
@@ -2000,7 +2000,7 @@ cfgParse(const Storage *const storage, const unsigned int argListSize, const cha
 
                     // Get key and value
                     const String *const key = strReplaceChr(
-                        strLower(strNewZN(keyValue + PGBACKREST_ENV_SIZE, (size_t)(equalPtr - (keyValue + PGBACKREST_ENV_SIZE)))),
+                        strLower(strNewZN(keyValue + PGBAKREST_ENV_SIZE, (size_t)(equalPtr - (keyValue + PGBAKREST_ENV_SIZE)))),
                         '_', '-');
                     const String *const value = STR(equalPtr + 1);
 
@@ -2074,7 +2074,7 @@ cfgParse(const Storage *const storage, const unsigned int argListSize, const cha
                 storage, parseOptionList,
                 PARSE_RULE_VAL_STR_IDX(parseRuleValStrCFGOPTDEF_CONFIG_PATH_SP_QT_FS_QT_SP_PROJECT_CONFIG_FILE),
                 PARSE_RULE_VAL_STR_IDX(parseRuleValStrCFGOPTDEF_CONFIG_PATH_SP_QT_FS_QT_SP_PROJECT_CONFIG_INCLUDE_PATH),
-                PGBACKREST_CONFIG_ORIG_PATH_FILE_STR);
+                PGBAKREST_CONFIG_ORIG_PATH_FILE_STR);
 
             iniFree(configParseLocal.ini);
             configParseLocal.ini = NULL;

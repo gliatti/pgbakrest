@@ -44,7 +44,7 @@
             <release-item>
                 <p>Rename <br-option>repo-s3-verify-ssl</br-option> option to <br-option>repo-s3-verify-tls</br-option>.</p>
 
-                <p>The new name is preferred because pgBackRest does not support any SSL protocol versions (they are all considered to be insecure). The old name will continue to be accepted.</p>
+                <p>The new name is preferred because pgBakRest does not support any SSL protocol versions (they are all considered to be insecure). The old name will continue to be accepted.</p>
             </release-item>
         </release-improvement-list>
 

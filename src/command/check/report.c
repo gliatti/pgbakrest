@@ -127,7 +127,7 @@ checkReportConfigEnv(JsonWrite *const json)
             const char *const environKeyValue = environ[environIdx];
             environIdx++;
 
-            if (strstr(environKeyValue, PGBACKREST_ENV) == environKeyValue)
+            if (strstr(environKeyValue, PGBAKREST_ENV) == environKeyValue)
             {
                 // Find the first = char
                 const char *const equalPtr = strchr(environKeyValue, '=');
@@ -152,7 +152,7 @@ checkReportConfigEnv(JsonWrite *const json)
 
             jsonWriteKey(json, key);
             checkReportConfigVal(
-                json, strReplaceChr(strLower(strNewZ(strZ(key) + PGBACKREST_ENV_SIZE)), '_', '-'), valueList, true);
+                json, strReplaceChr(strLower(strNewZ(strZ(key) + PGBAKREST_ENV_SIZE)), '_', '-'), valueList, true);
         }
 
         jsonWriteObjectEnd(json);

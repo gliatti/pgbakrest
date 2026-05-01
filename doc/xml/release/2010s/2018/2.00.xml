@@ -28,7 +28,7 @@
             </release-item>
 
             <release-item>
-                <p>Allow any non-command-line option to be reset to default on the command-line. This allows options in <file>pgbackrest.conf</file> to be reset to default which reduces the need to write new configuration files for specific needs.</p>
+                <p>Allow any non-command-line option to be reset to default on the command-line. This allows options in <file>pgbakrest.conf</file> to be reset to default which reduces the need to write new configuration files for specific needs.</p>
             </release-item>
 
             <release-item>

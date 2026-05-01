@@ -16,8 +16,8 @@ Define global section name
 /***********************************************************************************************************************************
 Prefix for environment variables
 ***********************************************************************************************************************************/
-#define PGBACKREST_ENV                                              "PGBACKREST_"
-#define PGBACKREST_ENV_SIZE                                         (sizeof(PGBACKREST_ENV) - 1)
+#define PGBAKREST_ENV                                              "PGBAKREST_"
+#define PGBAKREST_ENV_SIZE                                         (sizeof(PGBAKREST_ENV) - 1)
 
 /***********************************************************************************************************************************
 In some environments this will not be extern'd

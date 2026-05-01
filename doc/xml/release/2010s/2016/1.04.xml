@@ -32,7 +32,7 @@
                     <release-item-ideator id="sebastien.lardiere"/>
                 </release-item-contributor-list>
 
-                <p>Fixed an issue where a remote could try to start its own remote when the <br-option>backup-host</br-option> option was not present in <file>pgbackrest.conf</file> on the database server.</p>
+                <p>Fixed an issue where a remote could try to start its own remote when the <br-option>backup-host</br-option> option was not present in <file>pgbakrest.conf</file> on the database server.</p>
             </release-item>
 
             <release-item>

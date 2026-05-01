@@ -162,7 +162,7 @@
             </release-item>
 
             <release-item>
-                <p>Change backup test user from <id>backrest</id> to <id>pgbackrest</id>.</p>
+                <p>Change backup test user from <id>backrest</id> to <id>pgbakrest</id>.</p>
             </release-item>
         </release-development-list>
     </release-test-list>

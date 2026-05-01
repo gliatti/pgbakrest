@@ -9,7 +9,7 @@
 
                 <p>Fix archive-push/archive-get when <path>PGDATA</path> is symlinked.</p>
 
-                <p>These commands tried to use <code>cwd()</code> as <path>PGDATA</path> but this would disagree with the path configured in pgBackRest if <path>PGDATA</path> was symlinked. If <code>cwd()</code> does not match the <backrest/> path then <code>chdir()</code> to the path and make sure the next <code>cwd()</code> matches the result from the first call.</p>
+                <p>These commands tried to use <code>cwd()</code> as <path>PGDATA</path> but this would disagree with the path configured in pgBakRest if <path>PGDATA</path> was symlinked. If <code>cwd()</code> does not match the <backrest/> path then <code>chdir()</code> to the path and make sure the next <code>cwd()</code> matches the result from the first call.</p>
             </release-item>
 
             <release-item>

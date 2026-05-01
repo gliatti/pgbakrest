@@ -35,7 +35,7 @@ testRun(void)
     {
         // Common config
         HRN_STORAGE_PUT_Z(
-            storageTest, "pgbackrest.conf",
+            storageTest, "pgbakrest.conf",
             "[global]\n"
             "repo1-path=" TEST_PATH "/repo1\n"
             "repo1-cipher-type=aes-256-cbc\n"
@@ -57,7 +57,7 @@ testRun(void)
             "pg1-path=" TEST_PATH "/test1-pg1\n");
 
         StringList *const argListCommon = strLstNew();
-        hrnCfgArgRawZ(argListCommon, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argListCommon, cfgOptConfig, TEST_PATH "/pgbakrest.conf");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("no env, no config");
@@ -112,10 +112,10 @@ testRun(void)
         TEST_TITLE("env and config");
         {
             hrnCfgEnvRawZ(cfgOptBufferSize, "64KiB");
-            setenv(PGBACKREST_ENV "BOGUS", "bogus", true);
-            setenv(PGBACKREST_ENV "NO_ONLINE", "bogus", true);
-            setenv(PGBACKREST_ENV "DB_INCLUDE", "db1:db2", true);
-            setenv(PGBACKREST_ENV "RESET_COMPRESS_TYPE", "bogus", true);
+            setenv(PGBAKREST_ENV "BOGUS", "bogus", true);
+            setenv(PGBAKREST_ENV "NO_ONLINE", "bogus", true);
+            setenv(PGBAKREST_ENV "DB_INCLUDE", "db1:db2", true);
+            setenv(PGBAKREST_ENV "RESET_COMPRESS_TYPE", "bogus", true);
 
             hrnCfgLoad(cfgCmdCheck, argListCommon, (HrnCfgLoadParam){.log = true});
 
@@ -125,23 +125,23 @@ testRun(void)
                 "{"
                     "\"cfg\":{"
                         "\"env\":{"
-                            "\"PGBACKREST_BOGUS\":{"
+                            "\"PGBAKREST_BOGUS\":{"
                                 "\"warn\":\"invalid option\""
                             "},"
-                            "\"PGBACKREST_BUFFER_SIZE\":{"
+                            "\"PGBAKREST_BUFFER_SIZE\":{"
                                 "\"val\":\"64KiB\""
                             "},"
-                            "\"PGBACKREST_DB_INCLUDE\":{"
+                            "\"PGBAKREST_DB_INCLUDE\":{"
                                 "\"val\":["
                                     "\"db1\","
                                     "\"db2\""
                                 "]"
                             "},"
-                            "\"PGBACKREST_NO_ONLINE\":{"
+                            "\"PGBAKREST_NO_ONLINE\":{"
                                 "\"val\":\"bogus\","
                                 "\"warn\":\"invalid negate option\""
                             "},"
-                            "\"PGBACKREST_RESET_COMPRESS_TYPE\":{"
+                            "\"PGBAKREST_RESET_COMPRESS_TYPE\":{"
                                 "\"val\":\"bogus\","
                                 "\"warn\":\"invalid reset option\""
                             "}"
@@ -207,10 +207,10 @@ testRun(void)
                 "P00   WARN: configuration file contains negate option 'no-repo1-block'\n"
                 "P00   WARN: configuration file contains invalid option 'bogus'");
 
-            unsetenv(PGBACKREST_ENV "BOGUS");
-            unsetenv(PGBACKREST_ENV "NO_ONLINE");
-            unsetenv(PGBACKREST_ENV "DB_INCLUDE");
-            unsetenv(PGBACKREST_ENV "RESET_COMPRESS_TYPE");
+            unsetenv(PGBAKREST_ENV "BOGUS");
+            unsetenv(PGBAKREST_ENV "NO_ONLINE");
+            unsetenv(PGBAKREST_ENV "DB_INCLUDE");
+            unsetenv(PGBAKREST_ENV "RESET_COMPRESS_TYPE");
         }
     }
 
@@ -434,12 +434,12 @@ testRun(void)
         TEST_TITLE("multi-repo - primary database only, WAL not found");
 
         HRN_STORAGE_PUT_Z(
-            storageTest, "pgbackrest.conf",
+            storageTest, "pgbakrest.conf",
             "[test1]\n"
             "pg1-path=" TEST_PATH "/pg\n");
 
         argList = strLstNew();
-        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbakrest.conf");
         hrnCfgArgRawZ(argList, cfgOptRepoPath, TEST_PATH "/repo");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoPath, 2, TEST_PATH "/repo2");
         hrnCfgArgRawZ(argList, cfgOptArchiveTimeout, "500ms");
@@ -491,7 +491,7 @@ testRun(void)
         TEST_TITLE("no stanzas in config file");
 
         HRN_STORAGE_PUT_Z(
-            storageTest, "pgbackrest.conf",
+            storageTest, "pgbakrest.conf",
             "[test1]\n");
         HRN_CFG_LOAD(cfgCmdCheck, argList);
 
@@ -565,7 +565,7 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("checkArchiveCommand() valid");
 
-        TEST_RESULT_BOOL(checkArchiveCommand(STRDEF("pgbackrest --stanza=demo archive-push %p")), true, "archive_command valid");
+        TEST_RESULT_BOOL(checkArchiveCommand(STRDEF("pgbakrest --stanza=demo archive-push %p")), true, "archive_command valid");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("checkDbConfig() valid");

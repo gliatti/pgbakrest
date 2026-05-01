@@ -1068,7 +1068,7 @@ testRun(void)
                 #define TEST_SERVICE_TOKEN_FILE                     TEST_PATH "/web-id-token"
                 #define TEST_SERVICE_URI                                                                                           \
                     "/?Action=AssumeRoleWithWebIdentity&RoleArn=arn%3Aaws%3Aiam%3A%3A123456789012%3Arole%2FTestRole"               \
-                        "&RoleSessionName=pgBackRest&Version=2011-06-15&WebIdentityToken=" TEST_SERVICE_TOKEN
+                        "&RoleSessionName=pgBakRest&Version=2011-06-15&WebIdentityToken=" TEST_SERVICE_TOKEN
                 // {uncrustify_off - comment inside string}
                 #define TEST_SERVICE_RESPONSE                                                                                      \
                     "<AssumeRoleWithWebIdentityResponse xmlns=\"https://sts.amazonaws.com/doc/2011-06-15/\">\n"                    \
@@ -1141,7 +1141,7 @@ testRun(void)
                     " doesn't match configured thumbprint");
 
                 // -----------------------------------------------------------------------------------------------------------------
-                // Use status codes that don't trigger pgBackRest's automatic retry (5xx / 408 / 429), otherwise the test
+                // Use status codes that don't trigger pgBakRest's automatic retry (5xx / 408 / 429), otherwise the test
                 // harness script gets consumed by the retry attempts before the test can assert.
                 TEST_TITLE("STS non-XML response falls back to generic HTTP error");
 

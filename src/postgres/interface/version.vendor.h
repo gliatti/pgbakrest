@@ -6,7 +6,7 @@ Portions Copyright (c) 1994, Regents of the University of California
 
 For each supported release of PostgreSQL check the types in this file to see if they have changed. The easiest way to do this is to
 copy and paste in place and check git to see if there are any diffs. Tabs should be copied as is to make this process easy even
-though the pgBackRest project does not use tabs elsewhere.
+though the pgBakRest project does not use tabs elsewhere.
 
 New versions should always be added to the top of each type's #if block, underneath `PG_VERSION > PG_VERSION_MAX` to cause as little
 churn as possible. This also ensures that new versions will not work until PG_VERSION_MAX and this file have been updated.

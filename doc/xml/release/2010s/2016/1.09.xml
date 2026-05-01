@@ -60,7 +60,7 @@
                     <release-item-ideator id="jens.wilke"/>
                 </release-item-contributor-list>
 
-                <p>Set <id>application_name</id> to <id>"pgBackRest [command]"</id> for database connections.</p>
+                <p>Set <id>application_name</id> to <id>"pgBakRest [command]"</id> for database connections.</p>
             </release-item>
 
             <release-item>

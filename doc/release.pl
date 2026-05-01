@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 ####################################################################################################################################
-# release.pl - PgBackRest Release Manager
+# release.pl - PgBakRest Release Manager
 ####################################################################################################################################
 
 ####################################################################################################################################
@@ -24,20 +24,20 @@ use lib dirname(dirname($0)) . '/build/lib';
 use lib dirname(dirname($0)) . '/lib';
 use lib dirname(dirname($0)) . '/test/lib';
 
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::Storage;
-use pgBackRestTest::Common::StoragePosix;
-use pgBackRestTest::Common::VmTest;
+use pgBakRestTest::Common::ExecuteTest;
+use pgBakRestTest::Common::Storage;
+use pgBakRestTest::Common::StoragePosix;
+use pgBakRestTest::Common::VmTest;
 
-use pgBackRestDoc::Common::Doc;
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::Custom::DocCustomRelease;
-use pgBackRestDoc::Html::DocHtmlSite;
-use pgBackRestDoc::Markdown::DocMarkdown;
-use pgBackRestDoc::ProjectInfo;
+use pgBakRestDoc::Common::Doc;
+use pgBakRestDoc::Common::DocManifest;
+use pgBakRestDoc::Common::Exception;
+use pgBakRestDoc::Common::Log;
+use pgBakRestDoc::Common::String;
+use pgBakRestDoc::Custom::DocCustomRelease;
+use pgBakRestDoc::Html::DocHtmlSite;
+use pgBakRestDoc::Markdown::DocMarkdown;
+use pgBakRestDoc::ProjectInfo;
 
 ####################################################################################################################################
 # Usage
@@ -45,7 +45,7 @@ use pgBackRestDoc::ProjectInfo;
 
 =head1 NAME
 
-release.pl - pgBackRest Release Manager
+release.pl - pgBakRest Release Manager
 
 =head1 SYNOPSIS
 
@@ -53,7 +53,7 @@ release.pl [options]
 
  General Options:
    --help           Display usage and exit
-   --version        Display pgBackRest version
+   --version        Display pgBakRest version
    --quiet          Sets log level to ERROR
    --log-level      Log level for execution (e.g. ERROR, WARN, INFO, DEBUG)
 
@@ -125,8 +125,8 @@ eval
     my $strDocExe = "${strDocPath}/doc.pl";
     my $strTestExe = dirname($strDocPath) . "/test/test.pl";
 
-    my $oStorageDoc = new pgBackRestTest::Common::Storage(
-        $strDocPath, new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageDoc = new pgBakRestTest::Common::Storage(
+        $strDocPath, new pgBakRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
 
     # Determine if this is a dev release
     my $bDev = PROJECT_VERSION =~ /dev$/;
@@ -136,7 +136,7 @@ eval
     &log(INFO, "check version info");
 
     my $strReleaseFile = dirname(dirname(abs_path($0))) . '/doc/xml/release.xml';
-    my $oRelease = (new pgBackRestDoc::Custom::DocCustomRelease(new pgBackRestDoc::Common::Doc($strReleaseFile)))->releaseLast();
+    my $oRelease = (new pgBakRestDoc::Custom::DocCustomRelease(new pgBakRestDoc::Common::Doc($strReleaseFile)))->releaseLast();
 
     if ($oRelease->paramGet('version') ne PROJECT_VERSION)
     {
