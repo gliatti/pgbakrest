@@ -12,7 +12,7 @@
                     <release-item-reviewer id="stefan.fercot"/>
                 </release-item-contributor-list>
 
-                <p>Fix issue with <cmd>version</cmd>/<cmd>help</cmd> commands attempting to load <file>pgbackrest.conf</file>.</p>
+                <p>Fix issue with <cmd>version</cmd>/<cmd>help</cmd> commands attempting to load <file>pgbakrest.conf</file>.</p>
             </release-item>
         </release-bug-list>
     </release-core-list>

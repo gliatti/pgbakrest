@@ -14,7 +14,7 @@
                     <release-item-ideator id="michael.vitale"/>
                 </release-item-contributor-list>
 
-                <p>Fixed an issue where options that should not allow multiple values could be specified multiple times in <file>pgbackrest.conf</file> without an error being raised.</p>
+                <p>Fixed an issue where options that should not allow multiple values could be specified multiple times in <file>pgbakrest.conf</file> without an error being raised.</p>
             </release-item>
 
             <release-item>

@@ -17,10 +17,10 @@ Server cert with only a common name to test absence of alt names
 
 To regenerate, run the following in a temp path:
 
-openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbackrest/test/certificate/pgbackrest-test-server.key \
+openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbakrest/test/certificate/pgbakrest-test-server.key \
     -out server-cn-only.csr -subj "/CN=127.0.0.1"
-openssl x509 -extensions usr_cert -req -days 99999 -CA ~/pgbackrest/test/certificate/pgbackrest-test-ca.crt \
-    -CAkey ~/pgbackrest/test/certificate/pgbackrest-test-ca.key -CAcreateserial -in server-cn-only.csr -out server-cn-only.crt
+openssl x509 -extensions usr_cert -req -days 99999 -CA ~/pgbakrest/test/certificate/pgbakrest-test-ca.crt \
+    -CAkey ~/pgbakrest/test/certificate/pgbakrest-test-ca.key -CAcreateserial -in server-cn-only.csr -out server-cn-only.crt
 
 Then copy server-cn-only.crt into the variable below. Use a variable instead of a define so we know when the variable is not used.
 ***********************************************************************************************************************************/
@@ -91,7 +91,7 @@ To regenerate, run the following in a temp path:
 
 openssl genrsa -out bogus-ca.key 4096
 openssl req -new -x509 -sha256 -days 99999 -key bogus-ca.key -out bogus-ca.crt -subj "/CN=bogus"
-openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbackrest/test/certificate/pgbackrest-test-client.key \
+openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbakrest/test/certificate/pgbakrest-test-client.key \
     -out client-bad-ca.csr -subj "/CN=bogus"
 openssl x509 -extensions usr_cert -req -days 99999 -CA bogus-ca.crt -CAkey bogus-ca.key -CAcreateserial -in client-bad-ca.csr \
     -out client-bad-ca.crt
@@ -155,7 +155,7 @@ testRun(void)
     if (testBegin("AddressInfo"))
     {
 #ifdef TEST_CONTAINER_REQUIRED
-        #define TEST_ADDR_LOOP_HOST                                 "test-addr-loop.pgbackrest.org"
+        #define TEST_ADDR_LOOP_HOST                                 "test-addr-loop.pgbakrest.org"
 
         HRN_SYSTEM("echo \"127.0.0.1 " TEST_ADDR_LOOP_HOST "\" | sudo tee -a /etc/hosts > /dev/null");
         HRN_SYSTEM("echo \"::1 " TEST_ADDR_LOOP_HOST "\" | sudo tee -a /etc/hosts > /dev/null");
@@ -447,7 +447,7 @@ testRun(void)
 
         // -------------------------------------------------------------------------------------------------------------------------
 #ifdef TEST_CONTAINER_REQUIRED
-        #define TEST_ADDR_CONN_HOST                                 "test-addr-conn.pgbackrest.org"
+        #define TEST_ADDR_CONN_HOST                                 "test-addr-conn.pgbakrest.org"
 
         HRN_SYSTEM("echo \"127.0.0.1 " TEST_ADDR_CONN_HOST "\" | sudo tee -a /etc/hosts > /dev/null");
         HRN_SYSTEM("echo \"::1 " TEST_ADDR_CONN_HOST "\" | sudo tee -a /etc/hosts > /dev/null");
@@ -703,7 +703,7 @@ testRun(void)
                 tlsClientNewP(
                     sckClientNew(STRDEF("localhost"), HRN_SERVER_PORT_BOGUS, 5000, 5000), STRDEF("X"), 0, 0, true,
                     .certFile = STRDEF(HRN_SERVER_CLIENT_CERT), .keyFile = STRDEF(HRN_SERVER_KEY))),
-            CryptoError, "unable to load key file '" HRN_PATH_REPO "/test/certificate/pgbackrest-test-server.key': "
+            CryptoError, "unable to load key file '" HRN_PATH_REPO "/test/certificate/pgbakrest-test-server.key': "
 #if OPENSSL_VERSION_NUMBER >= 0x30000000L
             "[92274804]"
 #else
@@ -794,7 +794,7 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         // Add test hosts
         HRN_SYSTEM(
-            "echo \"127.0.0.1 test.pgbackrest.org host.test2.pgbackrest.org test3.pgbackrest.org\" | sudo tee -a /etc/hosts >"
+            "echo \"127.0.0.1 test.pgbakrest.org host.test2.pgbakrest.org test3.pgbakrest.org\" | sudo tee -a /etc/hosts >"
             " /dev/null");
 
         HRN_FORK_BEGIN()
@@ -841,8 +841,8 @@ testRun(void)
                 TEST_RESULT_VOID(
                     ioClientOpen(
                         tlsClientNewP(
-                            sckClientNew(STRDEF("test.pgbackrest.org"), testPort, 5000, 5000),
-                            STRDEF("test.pgbackrest.org"), 0, 0, true, .caFile = STRDEF(HRN_SERVER_CA))),
+                            sckClientNew(STRDEF("test.pgbakrest.org"), testPort, 5000, 5000),
+                            STRDEF("test.pgbakrest.org"), 0, 0, true, .caFile = STRDEF(HRN_SERVER_CA))),
                     "open connection");
 
                 // -----------------------------------------------------------------------------------------------------------------
@@ -854,8 +854,8 @@ testRun(void)
                 TEST_RESULT_VOID(
                     ioClientOpen(
                         tlsClientNewP(
-                            sckClientNew(STRDEF("host.test2.pgbackrest.org"), testPort, 5000, 5000),
-                            STRDEF("host.test2.pgbackrest.org"), 0, 0, true, .caFile = STRDEF(HRN_SERVER_CA))),
+                            sckClientNew(STRDEF("host.test2.pgbakrest.org"), testPort, 5000, 5000),
+                            STRDEF("host.test2.pgbakrest.org"), 0, 0, true, .caFile = STRDEF(HRN_SERVER_CA))),
                     "open connection");
 
                 // -----------------------------------------------------------------------------------------------------------------
@@ -880,10 +880,10 @@ testRun(void)
                 TEST_ERROR(
                     ioClientOpen(
                         tlsClientNewP(
-                            sckClientNew(STRDEF("test3.pgbackrest.org"), testPort, 5000, 5000),
-                            STRDEF("test3.pgbackrest.org"), 0, 0, true, .caFile = STRDEF(HRN_SERVER_CA))),
+                            sckClientNew(STRDEF("test3.pgbakrest.org"), testPort, 5000, 5000),
+                            STRDEF("test3.pgbakrest.org"), 0, 0, true, .caFile = STRDEF(HRN_SERVER_CA))),
                     CryptoError,
-                    "unable to find hostname 'test3.pgbackrest.org' in certificate common name or subject alternative names");
+                    "unable to find hostname 'test3.pgbakrest.org' in certificate common name or subject alternative names");
 
                 // -----------------------------------------------------------------------------------------------------------------
                 TEST_TITLE("certificate error");
@@ -1067,7 +1067,7 @@ testRun(void)
                 TEST_ASSIGN(tlsSession, ioServerAccept(tlsServer, socketSession), "open server session");
 
                 TEST_RESULT_BOOL(ioSessionAuthenticated(tlsSession), true, "server session authenticated");
-                TEST_RESULT_STR_Z(ioSessionPeerName(tlsSession), "pgbackrest-client", "check peer name");
+                TEST_RESULT_STR_Z(ioSessionPeerName(tlsSession), "pgbakrest-client", "check peer name");
                 TEST_RESULT_VOID(ioWrite(ioSessionIoWrite(tlsSession), BUFSTRDEF("message")), "server write");
                 TEST_RESULT_VOID(ioWriteFlush(ioSessionIoWrite(tlsSession)), "server write flush");
 

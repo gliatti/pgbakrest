@@ -14,10 +14,12 @@ Define global section name
 #define CFGDEF_SECTION_GLOBAL                                       "global"
 
 /***********************************************************************************************************************************
-Prefix for environment variables
+Prefix for environment variables. The legacy prefix is honored for backward compatibility with the prior project name.
 ***********************************************************************************************************************************/
-#define PGBACKREST_ENV                                              "PGBACKREST_"
-#define PGBACKREST_ENV_SIZE                                         (sizeof(PGBACKREST_ENV) - 1)
+#define PGBAKREST_ENV                                              "PGBAKREST_"
+#define PGBAKREST_ENV_SIZE                                         (sizeof(PGBAKREST_ENV) - 1)
+#define PGBAKREST_ENV_LEGACY                                       "PGBACKREST_"
+#define PGBAKREST_ENV_LEGACY_SIZE                                  (sizeof(PGBAKREST_ENV_LEGACY) - 1)
 
 /***********************************************************************************************************************************
 In some environments this will not be extern'd

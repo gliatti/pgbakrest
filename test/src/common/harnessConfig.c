@@ -69,7 +69,7 @@ hrnCfgLoad(ConfigCommand commandId, const StringList *argListParam, const HrnCfg
         strLstInsert(argList, 0, cfgParseCommandRoleName(commandId, param.role));
 
     // Insert the project exe
-    strLstInsert(argList, 0, param.exeBogus ? STRDEF("pgbackrest-bogus") : STRDEF(testProjectExe()));
+    strLstInsert(argList, 0, param.exeBogus ? STRDEF("pgbakrest-bogus") : STRDEF(testProjectExe()));
 
     // Log parameters
     if (param.log)
@@ -223,7 +223,7 @@ FN_INLINE_ALWAYS const char *
 hrnCfgEnvName(const ConfigOption optionId, const unsigned optionKey)
 {
     return strZ(
-        strReplaceChr(strUpper(strNewFmt(HRN_PGBACKREST_ENV "%s", cfgParseOptionKeyIdxName(optionId, optionKey - 1))), '-', '_'));
+        strReplaceChr(strUpper(strNewFmt(HRN_PGBAKREST_ENV "%s", cfgParseOptionKeyIdxName(optionId, optionKey - 1))), '-', '_'));
 }
 
 void

@@ -303,7 +303,7 @@ infoPgSaveCallback(void *const data, const String *const sectionNext, InfoSave *
 
         const InfoPgData pgData = infoPgDataCurrent(saveData->infoPg);
 
-        // These need to be saved because older pgBackRest versions expect them
+        // These need to be saved because older pgBakRest versions expect them
         if (saveData->infoPg->type == infoPgBackup)
         {
             infoSaveValue(infoSaveData, INFO_SECTION_DB, INFO_KEY_DB_CATALOG_VERSION, jsonFromVar(VARUINT(pgData.catalogVersion)));
@@ -326,7 +326,7 @@ infoPgSaveCallback(void *const data, const String *const sectionNext, InfoSave *
             const InfoPgData pgData = infoPgData(saveData->infoPg, pgDataIdx);
             JsonWrite *const json = jsonWriteObjectBegin(jsonWriteNewP());
 
-            // These need to be saved because older pgBackRest versions expect them
+            // These need to be saved because older pgBakRest versions expect them
             if (saveData->infoPg->type == infoPgBackup)
             {
                 jsonWriteUInt(jsonWriteKeyZ(json, INFO_KEY_DB_CATALOG_VERSION), pgData.catalogVersion);

@@ -7,7 +7,7 @@ Test Configuration Parse
 
 #include "common/harnessConfig.h"
 
-#define TEST_BACKREST_EXE                                           "pgbackrest"
+#define TEST_BACKREST_EXE                                           "pgbakrest"
 
 #define TEST_COMMAND_ARCHIVE_GET                                    "archive-get"
 #define TEST_COMMAND_BACKUP                                         "backup"
@@ -108,8 +108,8 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("check old config file constants");
 
-        TEST_RESULT_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE, "/etc/pgbackrest.conf", "check old config path");
-        TEST_RESULT_STR_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE_STR, "/etc/pgbackrest.conf", "check old config path str");
+        TEST_RESULT_Z(PGBAKREST_CONFIG_ORIG_PATH_FILE, "/etc/pgbakrest.conf", "check old config path");
+        TEST_RESULT_STR_Z(PGBAKREST_CONFIG_ORIG_PATH_FILE_STR, "/etc/pgbakrest.conf", "check old config path str");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("confirm same behavior with multiple config include files");
@@ -198,7 +198,7 @@ testRun(void)
             (const String *)&parseRuleValueStr[parseRuleValStrCFGOPTDEF_CONFIG_PATH_SP_QT_FS_QT_SP_PROJECT_CONFIG_FILE];
         const String *const backupCmdDefConfigInclPathValue =
             (const String *)&parseRuleValueStr[parseRuleValStrCFGOPTDEF_CONFIG_PATH_SP_QT_FS_QT_SP_PROJECT_CONFIG_INCLUDE_PATH];
-        const String *oldConfigDefault = STRDEF(TEST_PATH PGBACKREST_CONFIG_ORIG_PATH_FILE);
+        const String *oldConfigDefault = STRDEF(TEST_PATH PGBAKREST_CONFIG_ORIG_PATH_FILE);
 
         // Create the option structure and initialize with 0
         ParseOption parseOptionList[CFG_OPTION_TOTAL] = {{0}};
@@ -471,7 +471,7 @@ testRun(void)
             .valueList = value,
         };
 
-        // Override default paths for config and config-include-path - but no pgbackrest.conf file in override path only in old
+        // Override default paths for config and config-include-path - but no pgbakrest.conf file in override path only in old
         // default so ignored
         TEST_RESULT_STR_Z(
             cfgFileLoad(storageTest, parseOptionList, backupCmdDefConfigValue, backupCmdDefConfigInclPathValue, oldConfigDefault),
@@ -518,9 +518,9 @@ testRun(void)
             "spool-path=/path/to/spool\n",
             "config-path changed config-include-path default but directory does not exist - only config read");
 
-        // Copy the configFile to pgbackrest.conf (default is /etc/pgbackrest/pgbackrest.conf and new value is testPath so copy the
-        // config file (that was not read in the previous test) to pgbackrest.conf so it will be read by the override
-        HRN_SYSTEM_FMT("cp %s " TEST_PATH "/pgbackrest.conf", strZ(configFile));
+        // Copy the configFile to pgbakrest.conf (default is /etc/pgbakrest/pgbakrest.conf and new value is testPath so copy the
+        // config file (that was not read in the previous test) to pgbakrest.conf so it will be read by the override
+        HRN_SYSTEM_FMT("cp %s " TEST_PATH "/pgbakrest.conf", strZ(configFile));
 
         parseOptionList[cfgOptConfig].indexList[0].found = false;
         parseOptionList[cfgOptConfig].indexList[0].source = cfgSourceDefault;
@@ -1857,16 +1857,16 @@ testRun(void)
         strLstAddZ(argList, "--retention-ful=55");                  // Partial match for deprecated option
         strLstAddZ(argList, TEST_COMMAND_BACKUP);
 
-        setenv("PGBACKRESTXXX_NOTHING", "xxx", true);
-        setenv("PGBACKREST_BOGUS", "xxx", true);
-        setenv("PGBACKREST_ONLIN", "xxx", true);                    // Option prefix matching not allowed in environment
-        setenv("PGBACKREST_NO_DELTA", "xxx", true);
-        setenv("PGBACKREST_RESET_REPO1_HOST", "", true);
-        setenv("PGBACKREST_TARGET", "xxx", true);
-        setenv("PGBACKREST_ONLINE", "y", true);
-        setenv("PGBACKREST_DELTA", "y", true);
-        setenv("PGBACKREST_START_FAST", "n", true);
-        setenv("PGBACKREST_PG1_SOCKET_PATH", "@socket", true);
+        setenv("PGBAKRESTXXX_NOTHING", "xxx", true);
+        setenv("PGBAKREST_BOGUS", "xxx", true);
+        setenv("PGBAKREST_ONLIN", "xxx", true);                    // Option prefix matching not allowed in environment
+        setenv("PGBAKREST_NO_DELTA", "xxx", true);
+        setenv("PGBAKREST_RESET_REPO1_HOST", "", true);
+        setenv("PGBAKREST_TARGET", "xxx", true);
+        setenv("PGBAKREST_ONLINE", "y", true);
+        setenv("PGBAKREST_DELTA", "y", true);
+        setenv("PGBAKREST_START_FAST", "n", true);
+        setenv("PGBAKREST_PG1_SOCKET_PATH", "@socket", true);
 
         storagePutP(
             storageNewWriteP(storageTestWrite, configFile),
@@ -2031,14 +2031,14 @@ testRun(void)
         TEST_RESULT_VOID(cfgOptionIdxSet(cfgOptType, 0, cfgSourceParam, VARUINT64(STRID5("full", 0x632a60))), "set type as strid");
         TEST_RESULT_UINT(cfgOptionIdxStrId(cfgOptType, 0), STRID5("full", 0x632a60), "check strid");
 
-        unsetenv("PGBACKREST_BOGUS");
-        unsetenv("PGBACKREST_ONLIN");
-        unsetenv("PGBACKREST_NO_DELTA");
-        unsetenv("PGBACKREST_RESET_REPO1_HOST");
-        unsetenv("PGBACKREST_TARGET");
-        unsetenv("PGBACKREST_ONLINE");
-        unsetenv("PGBACKREST_START_FAST");
-        unsetenv("PGBACKREST_PG1_SOCKET_PATH");
+        unsetenv("PGBAKREST_BOGUS");
+        unsetenv("PGBAKREST_ONLIN");
+        unsetenv("PGBAKREST_NO_DELTA");
+        unsetenv("PGBAKREST_RESET_REPO1_HOST");
+        unsetenv("PGBAKREST_TARGET");
+        unsetenv("PGBAKREST_ONLINE");
+        unsetenv("PGBAKREST_START_FAST");
+        unsetenv("PGBAKREST_PG1_SOCKET_PATH");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("set command to expire");
@@ -2102,7 +2102,7 @@ testRun(void)
         TEST_RESULT_VOID(
             cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true), "load local config");
 
-        TEST_RESULT_STR_Z(cfgBin(), "pgbackrest", "--cmd not provided; cfgBin() returns " TEST_BACKREST_EXE);
+        TEST_RESULT_STR_Z(cfgBin(), "pgbakrest", "--cmd not provided; cfgBin() returns " TEST_BACKREST_EXE);
 
         argList = strLstNew();
         hrnCfgArgRawZ(argList, cfgOptStanza, "db");
@@ -2116,12 +2116,12 @@ testRun(void)
         strLstAddZ(argList, TEST_COMMAND_BACKUP);
         hrnCfgArgRawZ(argList, cfgOptStanza, "db");
         hrnCfgArgKeyRawZ(argList, cfgOptPgPath, 1, "/path/to/1");
-        hrnCfgArgRawZ(argList, cfgOptCmd, "pgbackrest_wrapper.sh");
+        hrnCfgArgRawZ(argList, cfgOptCmd, "pgbakrest_wrapper.sh");
         TEST_RESULT_VOID(
             cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true), "load local config");
 
         TEST_RESULT_STR_Z(
-            cfgOptionStr(cfgOptCmd), "pgbackrest_wrapper.sh", "--cmd provided; cmd is returned as pgbackrest_wrapper.sh");
+            cfgOptionStr(cfgOptCmd), "pgbakrest_wrapper.sh", "--cmd provided; cmd is returned as pgbakrest_wrapper.sh");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("default job retry and valid duplicate options");
@@ -2356,7 +2356,7 @@ testRun(void)
         TEST_RESULT_UINT(cfgOptionGroupIdxToKey(cfgOptGrpRepo, 0), 5, "check repo5 key");
         TEST_RESULT_Z(cfgOptionGroupName(cfgOptGrpRepo, 0), "repo5", "check repo5 name");
         TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoHost, 0), "repo5", "check repo5-host");
-        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbackrest", "check repo5-path");
+        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbakrest", "check repo5-path");
         TEST_RESULT_UINT(cfgOptionGroupIdxToKey(cfgOptGrpRepo, 1), 112, "check repo112 key");
         TEST_RESULT_Z(cfgOptionGroupName(cfgOptGrpRepo, 1), "repo112", "check repo112 name");
         TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 1), "/repo112", "check repo112-path");
@@ -2377,7 +2377,7 @@ testRun(void)
         TEST_RESULT_UINT(cfgOptionGroupIdxTotal(cfgOptGrpRepo), 1, "check repo group total");
         TEST_RESULT_UINT(cfgOptionGroupIdxToKey(cfgOptGrpRepo, 0), 1, "check repo1 key");
         TEST_RESULT_Z(cfgOptionGroupName(cfgOptGrpRepo, 0), "repo1", "check repo1 name");
-        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbackrest", "check repo1-path");
+        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbakrest", "check repo1-path");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("conditional option value -- value not found and no next value");
@@ -2411,9 +2411,9 @@ testRun(void)
 
             TEST_ERROR(
                 cfgParseOptionValueCondition(true, packRead, true, cfgOptCompressType, 0, STRDEF("lz4")), OptionInvalidValueError,
-                "pgBackRest not built with 'compress-type=lz4' support\n"
-                "HINT: if pgBackRest was installed from a package, does the package support this feature?\n"
-                "HINT: if pgBackRest was built from source, were the required development packages installed?");
+                "pgBakRest not built with 'compress-type=lz4' support\n"
+                "HINT: if pgBakRest was installed from a package, does the package support this feature?\n"
+                "HINT: if pgBakRest was built from source, were the required development packages installed?");
         }
 
         // -------------------------------------------------------------------------------------------------------------------------
@@ -2421,7 +2421,7 @@ testRun(void)
         {
             argList = strLstNew();
             strLstAddZ(argList, "backup");
-            setenv("PGBACKREST_INVALID", "xxx", true);
+            setenv("PGBAKREST_INVALID", "xxx", true);
 
             // Warn on invalid env var
             HRN_CFG_LOAD(cfgCmdHelp, argList);
@@ -2432,7 +2432,7 @@ testRun(void)
             HRN_CFG_LOAD(cfgCmdHelp, argList);
             HRN_CFG_LOAD(cfgCmdVersion, argList);
 
-            unsetenv("PGBACKREST_INVALID");
+            unsetenv("PGBAKREST_INVALID");
         }
 
         // -------------------------------------------------------------------------------------------------------------------------
@@ -2440,8 +2440,8 @@ testRun(void)
         TEST_TITLE("version and help (without command) do not load config or read env");
         {
             HRN_SYSTEM(
-                "echo '[global' | sudo tee " PGBACKREST_CONFIG_ORIG_PATH_FILE
-                " && sudo chmod 600 " PGBACKREST_CONFIG_ORIG_PATH_FILE);
+                "echo '[global' | sudo tee " PGBAKREST_CONFIG_ORIG_PATH_FILE
+                " && sudo chmod 600 " PGBAKREST_CONFIG_ORIG_PATH_FILE);
 
             argList = strLstNew();
             strLstAddZ(argList, TEST_BACKREST_EXE);
@@ -2451,14 +2451,14 @@ testRun(void)
             // Error on unreadable config
             TEST_ERROR(
                 cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true),
-                FileOpenError, "unable to open file '/etc/pgbackrest.conf' for read: [13] Permission denied");
+                FileOpenError, "unable to open file '/etc/pgbakrest.conf' for read: [13] Permission denied");
 
             // No error on unreadable config
             argList = strLstNew();
             HRN_CFG_LOAD(cfgCmdHelp, argList);
             HRN_CFG_LOAD(cfgCmdVersion, argList);
 
-            HRN_SYSTEM("sudo rm " PGBACKREST_CONFIG_ORIG_PATH_FILE);
+            HRN_SYSTEM("sudo rm " PGBAKREST_CONFIG_ORIG_PATH_FILE);
         }
 #endif
     }

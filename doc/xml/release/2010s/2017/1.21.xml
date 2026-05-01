@@ -58,7 +58,7 @@
 
         <release-feature-list>
             <release-item>
-                <p>Add creation of <file>/etc/pgbackrest.conf</file> to manual installation instructions.</p>
+                <p>Add creation of <file>/etc/pgbakrest.conf</file> to manual installation instructions.</p>
             </release-item>
         </release-feature-list>
 

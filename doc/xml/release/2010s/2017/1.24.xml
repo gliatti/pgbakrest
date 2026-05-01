@@ -72,7 +72,7 @@
     <release-test-list>
         <release-development-list>
             <release-item>
-                <p>Improve C library smart build by ignoring changes outside of <path>/lib/pgBackRest/Config</path>.</p>
+                <p>Improve C library smart build by ignoring changes outside of <path>/lib/pgBakRest/Config</path>.</p>
             </release-item>
         </release-development-list>
     </release-test-list>

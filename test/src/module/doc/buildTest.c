@@ -309,7 +309,7 @@ testRun(void)
             "                   <option id=\"cmd\" name=\"Cmd\">\n"
             "                       <summary>Cmd option command backup summary.</summary>\n"
             "                       <text><p>Cmd option command backup description.</p></text>\n"
-            "                       <example>pgbackrest</example>"
+            "                       <example>pgbakrest</example>"
             "                   </option>\n"
             "\n"
             "                   <option id=\"force\" name=\"Force Backup\">\n"
@@ -530,8 +530,8 @@ testRun(void)
                             "<title>Cmd Option (<id>--cmd</id>)</title>"
                             "<p>Cmd option command backup summary.</p>"
                             "<p>Cmd option command backup description.</p>"
-                            "<code-block>default: [path of executed pgbackrest binary]\n"
-                            "example: --cmd=pgbackrest</code-block>"
+                            "<code-block>default: [path of executed pgbakrest binary]\n"
+                            "example: --cmd=pgbakrest</code-block>"
                         "</section>"
                         "<section id=\"option-force\">"
                             "<title>Force Backup Option (<id>--force</id>)</title>"
@@ -602,19 +602,19 @@ testRun(void)
             "</doc>\n");
 
         // -------------------------------------------------------------------------------------------------------------------------
-        TEST_TITLE("pgbackrest.1.txt");
+        TEST_TITLE("pgbakrest.1.txt");
 
         TEST_STORAGE_GET(
             storageTest,
-            "doc/output/man/pgbackrest.1.txt",
+            "doc/output/man/pgbakrest.1.txt",
             "NAME\n"
-            "  pgBackRest - Reliable PostgreSQL Backup & Restore\n"
+            "  pgBakRest - Reliable PostgreSQL Backup & Restore\n"
             "\n"
             "SYNOPSIS\n"
-            "  pgbackrest [options] [command]\n"
+            "  pgbakrest [options] [command]\n"
             "\n"
             "DESCRIPTION\n"
-            "  pgBackRest is a reliable backup and restore solution for PostgreSQL...\n"
+            "  pgBakRest is a reliable backup and restore solution for PostgreSQL...\n"
             "\n"
             "COMMANDS\n"
             "  backup  backup command summary.\n"
@@ -637,34 +637,34 @@ testRun(void)
             "    --stanza               Stanza option summary.\n"
             "\n"
             "FILES\n"
-            "  /etc/pgbackrest/pgbackrest.conf\n"
-            "  /var/lib/pgbackrest\n"
-            "  /var/log/pgbackrest\n"
-            "  /var/spool/pgbackrest\n"
-            "  /tmp/pgbackrest\n"
+            "  /etc/pgbakrest/pgbakrest.conf\n"
+            "  /var/lib/pgbakrest\n"
+            "  /var/log/pgbakrest\n"
+            "  /var/spool/pgbakrest\n"
+            "  /tmp/pgbakrest\n"
             "\n"
             "EXAMPLES\n"
             "  * Create a backup of the PostgreSQL `main` cluster:\n"
             "\n"
-            "    $ pgbackrest --stanza=main backup\n"
+            "    $ pgbakrest --stanza=main backup\n"
             "\n"
-            "    The `main` cluster should be configured in `/etc/pgbackrest/pgbackrest.conf`\n"
+            "    The `main` cluster should be configured in `/etc/pgbakrest/pgbakrest.conf`\n"
             "\n"
             "  * Show all available backups:\n"
             "\n"
-            "    $ pgbackrest info\n"
+            "    $ pgbakrest info\n"
             "\n"
             "  * Show all available backups for a specific cluster:\n"
             "\n"
-            "    $ pgbackrest --stanza=main info\n"
+            "    $ pgbakrest --stanza=main info\n"
             "\n"
             "  * Show backup specific options:\n"
             "\n"
-            "    $ pgbackrest help backup\n"
+            "    $ pgbakrest help backup\n"
             "\n"
             "SEE ALSO\n"
-            "  /usr/share/doc/pgbackrest-doc/html/index.html\n"
-            "  http://www.pgbackrest.org\n");
+            "  /usr/share/doc/pgbakrest-doc/html/index.html\n"
+            "  http://www.pgbakrest.org\n");
     }
 
     FUNCTION_HARNESS_RETURN_VOID();

@@ -9,7 +9,7 @@ Harness for Loading Test Configurations
 /***********************************************************************************************************************************
 Prefix for environment variables
 ***********************************************************************************************************************************/
-#define HRN_PGBACKREST_ENV                                          "PGBACKREST_"
+#define HRN_PGBAKREST_ENV                                          "PGBAKREST_"
 
 /***********************************************************************************************************************************
 Config option constants
@@ -30,7 +30,7 @@ typedef struct HrnCfgLoadParam
 {
     VAR_PARAM_HEADER;
     ConfigCommandRole role;                                         // Command role (defaults to main)
-    bool exeBogus;                                                  // Use pgbackrest-bogus as exe parameter
+    bool exeBogus;                                                  // Use pgbakrest-bogus as exe parameter
     bool noStd;                                                     // Do not add standard options, e.g. lock-path
     bool log;                                                       // Log parameters? (used internally by HRN_CFG_LOAD())
     unsigned int jobRetry;                                          // Job retries (defaults to 0)

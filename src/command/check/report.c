@@ -127,7 +127,15 @@ checkReportConfigEnv(JsonWrite *const json)
             const char *const environKeyValue = environ[environIdx];
             environIdx++;
 
-            if (strstr(environKeyValue, PGBACKREST_ENV) == environKeyValue)
+            // Match either the new prefix or the legacy prefix from the prior project name
+            size_t envPrefixSize = 0;
+
+            if (strstr(environKeyValue, PGBAKREST_ENV) == environKeyValue)
+                envPrefixSize = PGBAKREST_ENV_SIZE;
+            else if (strstr(environKeyValue, PGBAKREST_ENV_LEGACY) == environKeyValue)
+                envPrefixSize = PGBAKREST_ENV_LEGACY_SIZE;
+
+            if (envPrefixSize > 0)
             {
                 // Find the first = char
                 const char *const equalPtr = strchr(environKeyValue, '=');
@@ -150,9 +158,13 @@ checkReportConfigEnv(JsonWrite *const json)
             StringList *const valueList = strLstNew();
             strLstAdd(valueList, varStr(kvGet(keyValue, VARSTR(key))));
 
+            // Strip the prefix using the size of whichever variant the key starts with
+            const size_t renderPrefixSize =
+                strBeginsWithZ(key, PGBAKREST_ENV) ? PGBAKREST_ENV_SIZE : PGBAKREST_ENV_LEGACY_SIZE;
+
             jsonWriteKey(json, key);
             checkReportConfigVal(
-                json, strReplaceChr(strLower(strNewZ(strZ(key) + PGBACKREST_ENV_SIZE)), '_', '-'), valueList, true);
+                json, strReplaceChr(strLower(strNewZ(strZ(key) + renderPrefixSize)), '_', '-'), valueList, true);
         }
 
         jsonWriteObjectEnd(json);

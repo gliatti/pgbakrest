@@ -63,17 +63,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
-          path: pgbackrest
+          path: pgbakrest
 
       - name: Run Test
-        run: cd ${HOME?} && ${GITHUB_WORKSPACE?}/pgbackrest/test/ci.pl ${{matrix.param}} --param=build-max=2
+        run: cd ${HOME?} && ${GITHUB_WORKSPACE?}/pgbakrest/test/ci.pl ${{matrix.param}} --param=build-max=2
 
       # Output the coverage report on failure in case the failure was caused by lack of coverage. This is not ideal since the report
       # needs to be copied from the log output into an HTML file where it can be viewed, but better than nothing.
       - name: Coverage Report
         if: failure()
         run: |
-          cat ${GITHUB_WORKSPACE?}/pgbackrest/test/result/coverage/coverage.html
+          cat ${GITHUB_WORKSPACE?}/pgbakrest/test/result/coverage/coverage.html
 
   # Unit tests on aarch64 with valgrind
   aarch64:
@@ -83,10 +83,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
-          path: pgbackrest
+          path: pgbakrest
 
       - name: Run Test
-        run: cd ${HOME?} && ${GITHUB_WORKSPACE?}/pgbackrest/test/ci.pl test --vm=u22 --param=c-only --param=no-coverage --param=no-back-trace --param=build-max=2
+        run: cd ${HOME?} && ${GITHUB_WORKSPACE?}/pgbakrest/test/ci.pl test --vm=u22 --param=c-only --param=no-coverage --param=no-back-trace --param=build-max=2
 
   # Basic tests on other architectures using emulation. The emulation is so slow that running all the unit tests would be too
   # expensive, but this at least shows that the build works and some of the more complex tests run. In particular, it is good to
@@ -107,7 +107,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
-          path: pgbackrest
+          path: pgbakrest
 
       - name: Install
         run: |
@@ -116,12 +116,12 @@ jobs:
           docker run --privileged --rm tonistiigi/binfmt --install all
 
       - name: Build VM
-        run: ${GITHUB_WORKSPACE?}/pgbackrest/test/test.pl --vm-build --vm=u22 --vm-arch=${{matrix.arch}}
+        run: ${GITHUB_WORKSPACE?}/pgbakrest/test/test.pl --vm-build --vm=u22 --vm-arch=${{matrix.arch}}
 
       - name: Run Test
         run: |
-          ${GITHUB_WORKSPACE?}/pgbackrest/test/test.pl --vm=u22 --vm-arch=${{matrix.arch}} --no-valgrind --no-coverage --no-optimize --build-max=2 --module=command --test=backup
-          ${GITHUB_WORKSPACE?}/pgbackrest/test/test.pl --vm=u22 --vm-arch=${{matrix.arch}} --no-valgrind --no-coverage --no-optimize --build-max=2 --module=postgres --test=interface
+          ${GITHUB_WORKSPACE?}/pgbakrest/test/test.pl --vm=u22 --vm-arch=${{matrix.arch}} --no-valgrind --no-coverage --no-optimize --build-max=2 --module=command --test=backup
+          ${GITHUB_WORKSPACE?}/pgbakrest/test/test.pl --vm=u22 --vm-arch=${{matrix.arch}} --no-valgrind --no-coverage --no-optimize --build-max=2 --module=postgres --test=interface
 
   # Selected unit tests on MacOS
   macos:
@@ -182,7 +182,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
-          path: pgbackrest
+          path: pgbakrest
 
       - name: Install
         run: |
@@ -191,12 +191,12 @@ jobs:
 
       - name: Build
         run: |
-          meson setup --unity=on -Dwerror=true build ${GITHUB_WORKSPACE?}/pgbackrest
+          meson setup --unity=on -Dwerror=true build ${GITHUB_WORKSPACE?}/pgbakrest
           ninja -vC build
 
       - name: Check
         run: |
-          diff ${GITHUB_WORKSPACE?}/pgbackrest/.github/workflows/symbol.out <(nm -gj --defined-only build/src/pgbackrest)
+          diff ${GITHUB_WORKSPACE?}/pgbakrest/.github/workflows/symbol.out <(nm -gj --defined-only build/src/pgbakrest)
 
   # Check that code is correctly formatted
   code-format:
@@ -206,8 +206,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
-          path: pgbackrest
+          path: pgbakrest
 
       - name: Check
         run: |
-          cd ${HOME?} && ${GITHUB_WORKSPACE?}/pgbackrest/test/ci.pl test --param=code-format-check
+          cd ${HOME?} && ${GITHUB_WORKSPACE?}/pgbakrest/test/ci.pl test --param=code-format-check

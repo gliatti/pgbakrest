@@ -160,7 +160,7 @@
             </release-item>
 
             <release-item>
-                <p>Rename <code>PGBACKREST</code>/<code>BACKREST</code> constants to <code>PROJECT</code>.</p>
+                <p>Rename <code>PGBAKREST</code>/<code>BACKREST</code> constants to <code>PROJECT</code>.</p>
             </release-item>
 
             <release-item>
