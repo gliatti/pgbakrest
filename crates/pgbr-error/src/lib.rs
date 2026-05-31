@@ -1,3 +1,4 @@
+#![cfg_attr(test, allow(clippy::unwrap_used, clippy::expect_used, clippy::panic))]
 //! Shared error model for the pgBackRust C->Rust migration.
 //!
 //! The crate exposes:
@@ -14,6 +15,9 @@
 use core::fmt;
 use std::cell::RefCell;
 use std::ffi::CString;
+
+pub mod format;
+pub mod retry;
 
 include!(concat!(env!("OUT_DIR"), "/error_types.rs"));
 
@@ -57,6 +61,34 @@ impl Error {
     pub fn message(&self) -> &str {
         &self.message
     }
+
+    /// Sets `self` as the thread's last error and longjmps into the nearest C `TRY_BEGIN`.
+    ///
+    /// Typed equivalent of "set the slot, return a sentinel, let the C caller invoke
+    /// `pgbr_error_throw_from_last`" — useful when a Rust function deeper in the call stack
+    /// already has an `Error` in hand and wants to surface it to a C caller in one step.
+    ///
+    /// # Safety
+    ///
+    /// The caller must be inside a C `TRY` / `CATCH` frame: the bridge longjmps via
+    /// `errorInternalThrowFmt` and skips Rust destructors on the call stack between this
+    /// call and the matching `TRY`. Resources holding `Drop` impls in those frames will leak
+    /// — this matches the existing C `THROW` semantics.
+    #[cfg(not(test))]
+    pub fn throw_into_c(self, file: &core::ffi::CStr, function: &core::ffi::CStr, line: i32) -> ! {
+        set_last_error(self);
+        // SAFETY: the C-side shim is provided by `pgbr_error_throw_from_last` in
+        // src/common/error/error.c. It never returns (longjmps via `errorInternalThrowFmt`).
+        unsafe {
+            pgbr_error_throw_from_last(file.as_ptr(), function.as_ptr(), line);
+        }
+        unreachable!("pgbr_error_throw_from_last returned");
+    }
+}
+
+#[cfg(not(test))]
+unsafe extern "C" {
+    fn pgbr_error_throw_from_last(file: *const core::ffi::c_char, function: *const core::ffi::c_char, line: i32);
 }
 
 impl fmt::Display for Error {
@@ -156,6 +188,42 @@ mod tests {
     fn name_uses_yaml_kebab_case() {
         assert_eq!(ErrorType::OptionInvalid.name(), "option-invalid");
         assert_eq!(ErrorType::Memory.name(), "memory");
+    }
+
+    #[test]
+    fn from_name_round_trips_known_variants() {
+        assert_eq!(ErrorType::from_name("memory"), Some(ErrorType::Memory));
+        assert_eq!(ErrorType::from_name("option-invalid"), Some(ErrorType::OptionInvalid));
+        assert_eq!(ErrorType::from_name("runtime"), Some(ErrorType::Runtime));
+        assert_eq!(ErrorType::from_name("Runtime"), None);
+        assert_eq!(ErrorType::from_name(""), None);
+        assert_eq!(ErrorType::from_name("nope"), None);
+    }
+
+    #[test]
+    fn parent_chain_is_flat_to_runtime_with_self_loop() {
+        // Every production entry currently parents to runtime; runtime is its own parent.
+        assert_eq!(ErrorType::Runtime.parent(), ErrorType::Runtime);
+        assert_eq!(ErrorType::Runtime.parent_code(), ErrorType::Runtime.code());
+        assert_eq!(ErrorType::Memory.parent(), ErrorType::Runtime);
+        assert_eq!(ErrorType::FileMissing.parent_code(), ErrorType::Runtime.code());
+    }
+
+    #[test]
+    fn extends_matches_c_semantics() {
+        // Strict: a non-self-parented type does not extend itself.
+        assert!(!ErrorType::Memory.extends(ErrorType::Memory));
+        assert!(!ErrorType::FileMissing.extends(ErrorType::FileMissing));
+
+        // Self-parented runtime extends runtime (first iteration finds the parent).
+        assert!(ErrorType::Runtime.extends(ErrorType::Runtime));
+
+        // Every non-runtime variant extends runtime through one hop.
+        assert!(ErrorType::Memory.extends(ErrorType::Runtime));
+        assert!(ErrorType::FileMissing.extends(ErrorType::Runtime));
+
+        // No production cross-relationships exist (everything parents to runtime).
+        assert!(!ErrorType::Memory.extends(ErrorType::FileMissing));
     }
 
     #[test]

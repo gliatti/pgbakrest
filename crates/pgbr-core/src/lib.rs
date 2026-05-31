@@ -1,3 +1,4 @@
+#![cfg_attr(test, allow(clippy::unwrap_used, clippy::expect_used, clippy::panic))]
 //! Foundational types shared across the workspace.
 //!
 //! For now this crate exposes two read-only borrowed views over C-managed buffers, [`RefStr`]
@@ -7,6 +8,16 @@
 //! system.
 
 #![cfg_attr(not(test), forbid(unsafe_op_in_unsafe_fn))]
+
+pub mod blob;
+pub mod debug;
+pub mod log;
+pub mod mem_context;
+pub mod object;
+pub mod stack_trace;
+pub mod string;
+pub mod string_static;
+pub mod string_z;
 
 use core::ffi::{CStr, c_char};
 use core::fmt;
